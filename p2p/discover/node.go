@@ -177,13 +177,13 @@ func parseComplete(rawurl string) (*Node, error) {
 		return nil, fmt.Errorf("invalid host: %v", err)
 	}
 	if ip = net.ParseIP(host); ip == nil {
-		fmt.Printf("Parse failed, trying LookupIP")
+		fmt.Errorf("Parse failed, trying LookupIP")
 		ips, err := net.LookupIP(host)
 		if err != nil {
 			return nil, errors.New("invalid IP address or hostname")
 		}
 		for _, ipLookup := range ips {
-			fmt.Printf("Found %v for %s\n", ipLookup, host)
+			fmt.Errorf("Found %v for %s\n", ipLookup, host)
 			if ipLookup.To4() != nil {
 				ip = ipLookup
 				break
